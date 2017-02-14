@@ -1,0 +1,24 @@
+.exam-title strong
+{
+	font-size: 30px;
+}
+.exam_detail_title
+{
+	font-size: 30px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+.exam_detail_datas
+{
+	padding-top: 20px;
+	padding-bottom: 15px;
+}
+.datas{
+	border: 1px;
+	background-color: #FDFDFD;
+}
+#shortanswere{
+	resize:none;
+	width: 500px;
+	height: 100px;
+}

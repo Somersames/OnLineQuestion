@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="szh.wechat.dao.ExerciseDao">
+
+	<resultMap type="Exercise" id="exercise">
+		<id property="exercise_id" column="exercise_id" />
+		<result property="exercise_name" column="exercise_name" />
+		<result property="exercise_type" column="exercise_type" />
+		<result property="exercise_people" column="exercise_people" />
+		<result property="exercise_commenthit" column="exercise_commenthit" />
+		<result property="examination_id" column="examination_id"/>
+		<result property="examination_name" column="examination_name"/>
+	</resultMap>
+	<select id="GetAllExercise" resultMap="exercise">
+		select * from examdetail
+	</select>
+	<select id="GetLimitExercise" resultMap="exercise">
+		select * from examdetail limit
+		<if test="start!=null">
+			${start} ,
+		</if>
+		<if test="end!=null">
+			${end}
+		</if>
+	</select>
+	<select id="GetExaminationType" resultMap="exercise">
+	select * from examdetail 
+	<where>
+	<if test="examination_name!=null">
+	examination_name ='${examination_name}'
+	</if>
+	<if test="examination_id!=null">
+	 and examination_id =${examination_id}
+	</if>
+	</where>
+	</select>
+	<select id="GetCountExercise"  resultType="int">
+	select count(examination_id) from examdetail
+	<where>
+	<if test="type!=null">
+	examination_name=#{type}
+	</if>
+	</where>
+	</select>
+</mapper>

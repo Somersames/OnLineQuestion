@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="szh.wechat.dao.ExaminationDao">
+	<resultMap type="Examination" id="examgetall">
+		<id property="exam_id" column="exam_id"></id>
+		<result property="exam_name" column="exam_name" />
+		<result property="exam_type" column="exam_type" />
+		<result property="exam_people" column="exam_people" />
+		<result property="exam_hit" column="exam_hit" />
+		<result property="exam_commenthit" column="exam_commenthit" />
+	</resultMap>
+	<select id="GetAllExam" resultMap="examgetall">
+	select * from  exam;
+	</select>
+</mapper>

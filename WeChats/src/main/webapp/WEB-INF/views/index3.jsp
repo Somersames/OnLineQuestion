@@ -56,7 +56,7 @@ body {
 					<div class="exam_detail_datas">
 						<form action="" method="post">
 							<ul>
-								<c:forEach items="${exercise_list}" var="exercise">
+								<c:forEach items="${exercise_list}" var="exercise" step="1" varStatus="exercisest">
 									<li>
 										<div class="exam_detail_datas_name">
 											<!-- 输出具体考试题目的名称 -->
@@ -69,12 +69,14 @@ body {
 										<div class="exam_detail_data_answere">
 											<!-- 这里通过判断假设是选择题显示选项，问答题显示输入框，其他的自行判断 -->
 											<c:if test="${exercise.exercise_type=='radio' }">
-			A&nbsp;&nbsp;<input type="radio" name="answere" id="answere"  value="A" onclick="loadanswere()">
-			B&nbsp;&nbsp;<input type="radio" name="answere" id="answere"  value="B" onclick="loadanswere()">
-			C&nbsp;&nbsp;<input type="radio" name="answere" id="answere"  value="C" onclick="loadanswere()">
-			D&nbsp;&nbsp;<input type="radio" name="answere" id="answere"  value="D" onclick="loadanswere()">
-			<input type="hidden" id="radio_id" value="${exercise.exercise_id }">
-			<p id="resmsg" ></p>
+											<c:set var="index" value="${exercisest.count-1 }"/>
+											<c:forEach items="${answere}" var="answeres"  begin="${index }" end="${index }" step="1" >
+											<c:forEach items="${answeres }" var="map"  >
+			                        ${map.key}&nbsp;&nbsp;<input type="radio" name="${exercise.exercise_id }" id="${exercise.exercise_id }"  value="${map.key }" onclick="loadanswere(this)">${map.value }
+			                                </c:forEach>
+			                  </c:forEach>
+			                              <input type="hidden" id="radio_id${index }" value="${exercise.exercise_id }">
+			                                <p id="resmsg${exercise.exercise_id }" ></p>
 											</c:if>
 											<c:if test="${exercise.exercise_type=='short-answere' }">
 												<p>解答：</p>
@@ -102,23 +104,26 @@ body {
 	</div>
 </body>
 <script type="text/javascript">
-	function loadanswere() {
-	var titles=$("#radio_id").val();
-	var contents =$("input[name='answere']:checked").val();
-	$("input[name='answere']").attr("disabled",true);
-	var sendinfo={'title':titles,'content':contents};
+	function loadanswere(that) {
+	//alert($(that).attr("id"));
+	var num=$(that).attr("id");
+	//var titles=$("#radio_id").val();
+	var contents =$("input[name='"+num+"']:checked").val();
+	$("input[name='"+num+"']").attr("disabled",true);
+	var sendinfo={'title':num,'content':contents};
+	//var answereid=$(".getanswereid").Attr("id");
 	var request=$.ajax({
 	method:'post',
 	url:'wechat/ajax',
-	contentType:'application/json',
+	contentType:'application/json; charset=utf-8',
 	data:JSON.stringify(sendinfo),
 	error:function(msg){
-	       $( "#resmsg" ).html("网络错误，请确认已经联网");
+	       $( "#resmsg+'"+num+"'" ).html("网络错误，请确认已经联网");
 	    }
 	 }
   );
 	request.done(function( msg ) {
-        $( "#resmsg" ).html( msg );
+        $( "#"+"resmsg"+num ).html( msg );
       }
   );
  

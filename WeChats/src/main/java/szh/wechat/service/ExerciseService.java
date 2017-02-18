@@ -3,8 +3,6 @@ package szh.wechat.service;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-
 import szh.wechat.pojo.Exercise;
 
 public interface ExerciseService {
@@ -20,4 +18,6 @@ public interface ExerciseService {
     public List<Exercise> GetExaminationType(Map<String, Object> map);
   //获取题目总数
     public int GetCountExercise(Map<String, Object> map);
+  //获取题目答案的方法
+  	public String getRightAnswere(int exercise_id);
 }

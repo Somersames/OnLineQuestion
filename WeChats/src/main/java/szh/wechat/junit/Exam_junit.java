@@ -5,12 +5,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 
 import szh.wechat.pojo.Examination;
 import szh.wechat.pojo.Exercise;
+import szh.wechat.pojo.JsonTest;
 import szh.wechat.service.ExerciseService;
+import szh.wechat.service.JsonTestService;
 import szh.wechat.serviceimpl.ExaminationServiceImpl;
 
 public class Exam_junit {
@@ -46,8 +52,9 @@ public class Exam_junit {
 		ClassPathXmlApplicationContext xml =new ClassPathXmlApplicationContext("classpath:ApplicationContext.xml");
 		ExerciseService exerciseService =(ExerciseService)xml.getBean("exerciseServiceImpl");
 		Map<String, Object> map =new HashMap<String, Object>();
-		map.put("start", 2);
-		map.put("end", 1);
+		map.put("type", "jquery");
+		map.put("start", 0);
+		map.put("end", 2);
 		List<Exercise> list=exerciseService.GetLimitExercise(map);
 		for(Exercise e:list)
 		{
@@ -62,7 +69,7 @@ public class Exam_junit {
 		ClassPathXmlApplicationContext xml =new ClassPathXmlApplicationContext("classpath:ApplicationContext.xml");
 		ExerciseService exerciseService =(ExerciseService)xml.getBean("exerciseServiceImpl");
 		Map<String, Object> map =new HashMap<String, Object>();
-		map.put("examination_name","java");
+		map.put("examination_name","jquery");
 //		map.put("examination_id", 1);
 		List<Exercise> list =exerciseService.GetExaminationType(map);
 		for(Exercise e:list)
@@ -90,4 +97,45 @@ public class Exam_junit {
 		System.out.println(5%3);
 		System.out.println(i);
 	}
+	@Test
+	public void jsonToString()
+	{
+		String string="{'A': 'STRING','B': 'INT','C': 'c','D': 'd'}";
+		JSONObject jsonObject = new JSONObject(string);
+		Map<String, Object> map =new HashMap<String, Object>();
+		Map<String, Object> map1 =jsonObject.toMap();
+		System.out.println(map1.get("A"));
+//		map.put("A", jsonObject.get("A"));
+//		map.put("B", jsonObject.get("B"));
+//		System.out.println(map.get("A"));
+	}
+	@Test
+	public void jsonTestTest()
+	{
+		String string="{'A': 'STRING','B': 'INT','C': 'c','D': 'd'}";
+		ClassPathXmlApplicationContext xml =new ClassPathXmlApplicationContext("classpath:ApplicationContext.xml");
+		JsonTestService jsonTestService =(JsonTestService) xml.getBean("jsonTestServiceImpl");
+		Map<String, Object> map =new HashMap<String, Object>();
+		map.put("name", string);
+		map.put("id", "2");
+		jsonTestService.saveJsonTest(map);
+	}
+	@Test
+	public  void getJsonTest()
+	{
+//		WebApplicationContext wac =org.springframework.web.context.ContextLoader.getCurrentWebApplicationContext();
+		Map<String, Object> map =new HashMap<String, Object>();
+		map.put("id", "2");
+		ClassPathXmlApplicationContext xml =new ClassPathXmlApplicationContext("classpath:ApplicationContext.xml");
+		JsonTestService jsonTestService =(JsonTestService) xml.getBean("jsonTestServiceImpl");
+//		JsonTestService jsonTestService=(JsonTestService) wac.getBean("jsonTestServiceImpl");
+		JsonTest jsonTest=jsonTestService.getJsonTest(map);
+		System.out.println(jsonTest.getJson_name());
+		JSONObject jsonObject = new JSONObject(jsonTest.getJson_name());
+		Map<String, Object> map1 =new HashMap<String, Object>();
+		map1.put("A", jsonObject.get("A"));
+		map1.put("B", jsonObject.get("B"));
+		System.out.println(map1.get("A"));
+	}
 }
+

@@ -9,11 +9,12 @@ import org.springframework.stereotype.Service;
 import szh.wechat.dao.ExerciseDao;
 import szh.wechat.pojo.Exercise;
 import szh.wechat.service.ExerciseService;
+
 @Service
-public class ExerciseServiceImpl implements ExerciseService{
-    @Autowired
-	private ExerciseDao exerciseDao;
-    
+public class ExerciseServiceImpl implements ExerciseService {
+	@Autowired
+	ExerciseDao exerciseDao;
+
 	public List<Exercise> GetAllExercise() {
 		return exerciseDao.GetAllExercise();
 	}
@@ -36,6 +37,10 @@ public class ExerciseServiceImpl implements ExerciseService{
 
 	public int GetCountExercise(Map<String, Object> map) {
 		return exerciseDao.GetCountExercise(map);
+	}
+
+	public String getRightAnswere(int exercise_id) {
+		return exerciseDao.getRightAnswere(exercise_id);
 	}
 
 }

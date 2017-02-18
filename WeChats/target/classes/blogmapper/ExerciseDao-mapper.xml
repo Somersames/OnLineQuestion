@@ -17,13 +17,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from examdetail
 	</select>
 	<select id="GetLimitExercise" resultMap="exercise">
-		select * from examdetail limit
+		select * from examdetail 
+		<where>
+		<if test="type!=null">
+		  examination_name='${type }'
+		</if>
+		</where>
 		<if test="start!=null">
-			${start} ,
+			limit ${start} ,
 		</if>
 		<if test="end!=null">
 			${end}
 		</if>
+		
 	</select>
 	<select id="GetExaminationType" resultMap="exercise">
 	select * from examdetail 
@@ -43,5 +49,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	examination_name=#{type}
 	</if>
 	</where>
+	</select>
+	<select id="getRightAnswere" resultType="string" parameterType="int">
+	select exercise_answere from examdetail where exercise_id =#{id}
 	</select>
 </mapper>

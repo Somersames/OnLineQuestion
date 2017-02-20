@@ -14,4 +14,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="GetAllExam" resultMap="examgetall">
 	select * from  exam;
 	</select>
+	<update id="updateExanhit" >
+	update exam set 
+	<if test="exam_hit!=null">
+	exam_hit=#{exam_hit} 
+	</if>
+	<if test="exam_commenthit!=null">
+	 , exam_commenthit=#{exam_commenthit}
+	</if>
+	<where>
+	<if test="exam_id!=null">
+	exam_id=#{exam_id}
+	</if>
+	<if test="exam_name!=null">
+	exam_name=#{exam_name}
+	</if>
+	</where>
+	</update>
 </mapper>

@@ -114,13 +114,13 @@ body {
 						<ul>
 						<c:forEach items="${examlist}" var="exam">
 						<li style="padding-bottom: 30px">
-						<span class="datas_titles"><img alt="文章类型" src="${pageContext.request.contextPath }/static/img/title.png"><a href="${pageContext.request.contextPath }/exercise?types=${exam.exam_name}">${exam.exam_name}<!-- 获取文章类型 --></a></span>
+						<span class="datas_titles"><img alt="文章类型" src="${pageContext.request.contextPath }/static/img/title.png"><a href="${pageContext.request.contextPath }/exercise?types=${exam.exam_name}&click=${exam.exam_hit}">${exam.exam_name}<!-- 获取文章类型 --></a></span>
 						<span class="jianjie">摘要：${exam.exam_type }</span>
 						<span class="info">
 						<font color="#999">2016-07-03 10:39</font> &nbsp;&nbsp;
 						<br>
-						  		<font color="#33a5ba"><a href="#">阅读</a><font color="#999">(404)</font>&nbsp;&nbsp;</font>
-						  		<font color="#33a5ba"><a href="#">评论</a><font color="#999">(8)</font>&nbsp;&nbsp;</font>
+						  		<font color="#33a5ba"><a href="#">阅读</a><font color="#999">(${exam.exam_hit })</font>&nbsp;&nbsp;</font>
+						  		<font color="#33a5ba"><a href="#">评论</a><font color="#999">(${exam.exam_commenthit })</font>&nbsp;&nbsp;</font>
 						</span>
 						</li>
 						<hr style="height:5px;border:none;border-top:1px dashed gray;padding-bottom:10px;" />	

@@ -15,6 +15,7 @@ import org.springframework.web.context.WebApplicationContext;
 import szh.wechat.pojo.Examination;
 import szh.wechat.pojo.Exercise;
 import szh.wechat.pojo.JsonTest;
+import szh.wechat.service.ExaminationService;
 import szh.wechat.service.ExerciseService;
 import szh.wechat.service.JsonTestService;
 import szh.wechat.serviceimpl.ExaminationServiceImpl;
@@ -136,6 +137,18 @@ public class Exam_junit {
 		map1.put("A", jsonObject.get("A"));
 		map1.put("B", jsonObject.get("B"));
 		System.out.println(map1.get("A"));
+	}
+	//测试更新点击次数方法是否正确
+	@Test
+	public  void  testupdate()
+	{
+		ClassPathXmlApplicationContext classPathXmlApplicationContext =new ClassPathXmlApplicationContext("classpath:ApplicationContext.xml");
+		ExaminationService examinationService =(ExaminationService)classPathXmlApplicationContext.getBean("examinationServiceImpl");
+		Map<String, Object> map =new HashMap<String, Object>();
+		map.put("exam_hit", 3);
+		map.put("exam_commenthit", 3);
+		map.put("exam_id", 1);
+		examinationService.updateExanhit(map);
 	}
 }
 

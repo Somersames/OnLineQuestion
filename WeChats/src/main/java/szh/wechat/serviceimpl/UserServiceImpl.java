@@ -1,5 +1,7 @@
 package szh.wechat.serviceimpl;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,11 @@ public class UserServiceImpl implements UserService {
 
 	public Users getUserQuestion(String user_name) {
 		return userDao.getUserQuestion(user_name);
+	}
+
+	public Users checkUser(Map<String, Object> map) {
+		return userDao.checkUser(map);
+		
 	}
 
 }

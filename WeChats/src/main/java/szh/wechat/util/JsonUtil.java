@@ -23,4 +23,19 @@ public class JsonUtil {
 		Map<String,Object> map=JsonUtil.JsonToMap(s);
 		System.out.println(map.get("title"));
 	}
+	//从socket那里得到的json在这里解析
+	public static Map<String, Object> socketJsonConvert(String s)
+	{
+		JSONObject jsonObject =new JSONObject(s);
+		Map<String, Object> map =new HashMap<String, Object>();
+		map.put("username", jsonObject.get("username"));
+		map.put("content", jsonObject.get("content"));
+		return map;
+	}
+	//将map转为json
+	public static JSONObject mapToJson(Map<String, Object> map)
+	{
+		JSONObject jsonObject =new JSONObject(map);
+		return jsonObject;
+	}
 }

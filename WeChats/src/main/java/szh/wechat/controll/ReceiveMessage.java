@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.Test;
 
 import org.dom4j.DocumentException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import szh.wechat.entity.Message;
+import szh.wechat.event.WeChatEvent;
 import szh.wechat.util.CheckUtil;
 import szh.wechat.util.MessageExchange;
 
@@ -52,14 +55,17 @@ public class ReceiveMessage {
 			String MsgType =map.get("MsgType");
 			String Content =map.get("Content");
 			String MsgId =map.get("MsgId");
+			//触发事件表示微信接收到了消息
+			triggerEvent(map);
 			String messagecontentString =null;
 			if(MsgType.equals("text"))
 			{
+				
 				Message message =new Message();
 				message.setFromUserName(ToUserName);
 				message.setToUserName(FromUserName);
 				message.setMsgType("text");
-				message.setContent("���շ��͵���Ϣ��"+Content);
+				message.setContent(Content);
 				message.setCreateTime(new Date().getTime());
 				messagecontentString=MessageExchange.messagetoxml(message);
 			}
@@ -69,5 +75,12 @@ public class ReceiveMessage {
 		}finally{
 			out.close();
 		}
+	}
+	//主动触发事件
+	public static void triggerEvent(Map<String, String> map) 
+	{
+		ClassPathXmlApplicationContext  xml =new ClassPathXmlApplicationContext("classpath:ApplicationContext.xml");
+		WeChatEvent weChatEvent =new WeChatEvent("hello", map.get("Content"), map.get("FromUserName"), map.get("CreateTime"));
+		xml.publishEvent(weChatEvent);
 	}
 }

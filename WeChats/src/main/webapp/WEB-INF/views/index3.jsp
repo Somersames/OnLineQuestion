@@ -30,7 +30,7 @@ body {
 					<strong>套题名称:<font size="15" color="#014D67">${type }</font></strong>
 				</div>
 			</div>
-			<div class="col-md-6">考生：等级：</div>
+			<div class="col-md-6">考生：${sessionScope.username } &nbsp 等级：</div>
 		</div>
 	</div>
 	<div class="container" style="padding-top: 50px;padding-bottom: 15px">
@@ -61,7 +61,7 @@ body {
 										<div class="exam_detail_datas_name">
 											<!-- 输出具体考试题目的名称 -->
 											<font size="4" , color="#E3A05D">${exercise.exercise_title }:</font><span
-												style="float: right">${exercise.examination_name }</span>
+												style="float: right">${exercise.examination_name }<a href="${pageContext.request.contextPath }/wechatcon">推送到我的微信</a></span>
 										</div>
 										<div class="exam_detail_data_content">
 											<font size="3" color="#2F4F4F">${exercise.exercise_content }</font>

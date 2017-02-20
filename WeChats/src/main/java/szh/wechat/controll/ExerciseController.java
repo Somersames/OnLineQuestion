@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import szh.wechat.pojo.Answere;
 import szh.wechat.pojo.Exercise;
 import szh.wechat.service.AnswereService;
+import szh.wechat.service.ExaminationService;
 import szh.wechat.service.ExerciseService;
 import szh.wechat.util.AnswereUtil;
 import szh.wechat.util.PageBean;
@@ -28,12 +29,22 @@ public class ExerciseController {
 	ExerciseService exerciseService;
 	@Resource
 	AnswereService answereService;
+	@Resource
+	ExaminationService examinationService;
 	@RequestMapping("/exercise")
 	public ModelAndView GetAllExercise(HttpServletRequest request,
 		@RequestParam(value="page",required=false)String page,
-		@RequestParam(value="types" ,required=false) String types
+		@RequestParam(value="types" ,required=false) String types,
+		@RequestParam(value="click" ,required=false) String click
 		)
 	{
+		if(click!=null)
+		{
+			Map<String, Object> maphit =new HashMap<String, Object>();
+			maphit.put("exam_hit", Integer.parseInt(click)+1);
+			maphit.put("exam_name", types);
+			examinationService.updateExanhit(maphit);
+		}
 		//获取url里面的page参数以及向要显示的题目数
 		Map<String, Object> typemap = new HashMap<String, Object>();
 		typemap.put("type", types);

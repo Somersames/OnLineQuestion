@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import szh.wechat.dao.ExaminationDao;
+import szh.wechat.pojo.Examination;
 import szh.wechat.service.ExaminationService;
 @Service
 public class ExaminationServiceImpl implements ExaminationService{
@@ -15,6 +16,10 @@ public class ExaminationServiceImpl implements ExaminationService{
 
 	public List GetAllExam() {
 		return examinationDao.GetAllExam();
+	}
+
+	public void updateExanhit(Map<String, Object> map) {
+		examinationDao.updateExanhit(map);
 	}
 	
 }
